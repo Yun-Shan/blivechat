@@ -239,6 +239,11 @@ export default class ChatClientDirectOpenLive extends ChatClientOfficialBase {
       authorType = 0
     }
 
+    let showContent = data.msg
+    if (data.reply_uname !== '') {
+      showContent = `@${data.reply_uname} ${showContent}`
+    }
+
     let emoticon = null
     if (data.dm_type === 1) {
       emoticon = data.emoji_img_url
@@ -249,7 +254,7 @@ export default class ChatClientDirectOpenLive extends ChatClientOfficialBase {
       timestamp: data.timestamp,
       authorName: data.uname,
       authorType: authorType,
-      content: data.msg,
+      content: showContent,
       privilegeType: data.guard_level,
       isGiftDanmaku: chat.isGiftDanmakuByContent(data.msg),
       medalLevel: data.fans_medal_wearing_status ? data.fans_medal_level : 0,
